@@ -1,0 +1,4 @@
+[submodule "PermitC"]
+	path = PermitC
+	url = https://github.com/limitbreakinc/PermitC
+	branch = v1.0.0
