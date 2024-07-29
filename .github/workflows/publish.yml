@@ -1,0 +1,48 @@
+name: Release NPM Package to npmjs.com
+
+on:
+    workflow_dispatch:
+      inputs:
+        tag:
+          description: 'Tag name to push'
+          required: true
+          default: 'v1.0.0'
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+    - name: Checkout Source Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: 'true'
+        submodules: 'true'
+
+    - name: Squash & Push Code to Public Repo
+      run: |
+        git switch "${{ github.event.inputs.tag }}" --detach
+
+    - name: Use Node.js 20.11.0
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.11.0'
+        registry-url: 'https://registry.npmjs.com'
+
+    - name: Publish to npm
+      run: |
+        cd PermitC/
+        mkdir scripts/
+        cp ../build.package.json ./package.json
+        cp ../package-lock.json ./package-lock.json
+        cp ../build.hardhat.config.js ./hardhat.config.js
+        cp ../scripts/prepack.js ./scripts/prepack.js
+        npm ci
+        npm publish --access public
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
+        NPM_CONFIG_PROVENANCE: true
