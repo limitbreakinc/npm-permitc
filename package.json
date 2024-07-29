@@ -1,0 +1,27 @@
+{
+    "name": "@limitbreak/permit-c",
+    "version": "1.0.0",
+    "description": "PermitC extends the Uniswap Permit2 system for ERC20, ERC721 and ERC1155 tokens. This is an advanced approval system which allows for easier and more secure approvals across applications. Abstracting the approval process and adding in expirations allows users to be more insulated from the advanced logic of protocols which are more likely to be exploited.",
+    "main": "index.js",
+    "files": [
+      "/**/*.sol",
+      "/build/contracts/*.json",
+      "!/test",
+      "!/script"
+    ],
+    "scripts": {
+      "compile": "hardhat compile",
+      "clean": "hardhat clean && rimraf artifacts build contracts/build cache *.tgz",
+      "prepack": "npm run clean && npm run compile && node scripts/prepack.js"
+    },
+    "author": "Limit Break, Inc.",
+    "license": "MIT",
+    "devDependencies": {
+      "@nomicfoundation/hardhat-toolbox": "4.0.0",
+      "hardhat": "2.19.5"
+    },
+    "dependencies": {
+      "@openzeppelin/contracts": "4.8.3"
+  }
+  }
+  
